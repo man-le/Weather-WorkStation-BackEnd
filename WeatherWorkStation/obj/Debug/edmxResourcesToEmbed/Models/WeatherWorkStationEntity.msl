@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WeatherWorkStationModelStoreContainer" CdmEntityContainer="WeatherWorkStationEntities">
+    <EntitySetMapping Name="Node">
+      <EntityTypeMapping TypeName="WeatherWorkStationModel.Node">
+        <MappingFragment StoreEntitySet="Node">
+          <ScalarProperty Name="NodeId" ColumnName="NodeId" />
+          <ScalarProperty Name="NodeLocation" ColumnName="NodeLocation" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NodeDetail">
+      <EntityTypeMapping TypeName="WeatherWorkStationModel.NodeDetail">
+        <MappingFragment StoreEntitySet="NodeDetail">
+          <ScalarProperty Name="NodeId" ColumnName="NodeId" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="SoilMoisture" ColumnName="SoilMoisture" />
+          <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+          <ScalarProperty Name="Raining" ColumnName="Raining" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

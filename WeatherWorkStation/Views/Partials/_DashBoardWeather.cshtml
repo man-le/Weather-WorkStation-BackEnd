@@ -1,0 +1,71 @@
+﻿<div class="col-md-6 col-md-offset-3 weather-grids widget-shadow">
+    <div class="header-top">
+        <figure class="icons">
+            <canvas id="clear-day" width="64" height="64"></canvas>
+        </figure>
+        <h2>Weather</h2>
+        <ul>
+            <li><p>°C</p></li>
+            <li><p class="cen">°F</p></li>
+        </ul>
+
+        <div class="clearfix"> </div>
+    </div>
+    @{
+        WeatherWorkStation.Controllers.DashBoardController controller = new WeatherWorkStation.Controllers.DashBoardController();
+        var list = controller.GetNodeId();
+        var updateList = new List<WeatherWorkStation.Utils.NodeInfo>();
+        foreach (var id in list)
+        {
+            var result = controller.GetNodeInfo(id);
+            if (null == result)
+            {
+                return;
+            }
+            updateList.Add(result);
+        }
+        String myString = "";
+        myString += "<div class='header-bottom'>";
+        foreach (var obj in updateList)
+        {
+            myString += "<div class='header-bottom1'>\n<div class='header-head'>\t";
+            if (obj.Temperature < 0)
+            {
+                myString += "<h4> Snowy </h4>\n";
+                myString += "<figure class='icons'>\n \t <canvas id ='snow' width = '64' height = '64'> </canvas>\n";
+                myString += "</figure>";
+            }
+            else if (obj.Raining < 500)
+            {
+                myString += "<h4> Rainy </h4>\n";
+                myString += "<figure class='icons'>\n \t <canvas id ='rain' width = '64' height = '64'> </canvas>\n";
+                myString += "</figure>";
+            }
+            else
+            {
+                myString += "<h4> Sunny </h4>\n";
+                myString += "<figure class='icons'>\n \t <canvas id ='partly-cloudy-day' width = '64' height = '64'> </canvas>\n";
+                myString += "</figure>";
+            }
+            myString += "<h6>" + obj.Temperature + "°</h6> \n";
+            myString += "<h6>" + Math.Abs((obj.SoilMoisture - 1000) / 10) + "%</h6> \n";
+            myString += "<h6>" + obj.Humidity + "%</h6>\n";
+            myString += "<div class='bottom-head'> \n";
+            myString += "\t <p>" + obj.NodeLocation + "</p> \n";
+            var updatedTime = DateTimeOffset.FromUnixTimeSeconds(obj.UpdateTime).DateTime.ToLocalTime();
+            myString += "\t <p>" + updatedTime + "</p> \n";
+            myString += "\t \t</div>\n \t \n </div></div>";
+
+        }
+        myString += "</div></div>";
+        myString += "<script> var icons = new Skycons({ \"color\": \"#E94E02\" }),list = [\"clear-night\", \"partly-cloudy-day\",";
+        myString += "   \"partly-cloudy-night\", \"cloudy\", \"rain\", \"sleet\",\"snow\",\"wind\",\"fog\" ],i; for (i = list.length; i--;) icons.set(list[i], list[i]);icons.play();</script>";
+    var myHtmlString = new HtmlString(myString);
+    }
+    @myHtmlString
+    <div class='clearfix'></div>
+</div>
+
+
+
+

@@ -1,0 +1,17 @@
+﻿
+@{
+    Html.RenderPartial("_Header");
+}
+<!-- heder start -->
+@{
+    Html.RenderPartial("_NavBar");
+}
+<!-- //header-ends -->
+<!-- main content start-->
+@RenderBody()
+<!--  //main content end -->
+<!--footer-->
+@{
+    Html.RenderPartial("_Footer");
+}
+<!-- //footer end -->

@@ -1,0 +1,48 @@
+﻿@{ 
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" sidebar" role="navigation">
+    <div class="navbar-collapse">
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="~Views/Home/Index.cshtml" class="active"><i class="fa fa-home nav_icon"></i>Dashboard</a>
+                </li>
+            </ul>
+            <!-- //sidebar-collapse -->
+        </nav>
+    </div>
+</div>
+<div id="page-wrapper">
+    <div class="main-page">
+        <div id="DashBoardWeather" class="elements">
+            @{
+                Html.RenderPartial("~/Views/Partials/_DashBoardWeather.cshtml");
+            }
+            <div class="clearfix"> </div>
+        </div>
+           
+        <div id="NodeStatus" class="row">
+            @{
+                Html.RenderPartial("~/Views/Partials/_NodeStatus.cshtml");
+            }
+            <div class="clearfix"> </div>
+        </div>
+            <div class="row calender widget-shadow">
+                <h4 class="title">Calander</h4>
+                <div class="cal1">
+
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+<script type="text/javascript">  
+    setInterval("$('#NodeStatus').load('WeatherWorkStation/DashBoard/Refresh')", 2000);
+    setInterval("$('#DashBoardWeather').load('WeatherWorkStation/DashBoard/RefreshWeatherTable')", 2000);
+
+     //setInterval("$('#NodeStatus').load('/DashBoard/Refresh')", 2000);
+     //setInterval("$('#DashBoardWeather').load('/DashBoard/RefreshWeatherTable')",2000);
+</script>

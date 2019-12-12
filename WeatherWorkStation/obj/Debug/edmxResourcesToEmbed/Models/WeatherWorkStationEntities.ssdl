@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeatherWorkStationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Node">
+    <Key>
+      <PropertyRef Name="NodeId" />
+    </Key>
+    <Property Name="NodeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NodeLocation" Type="nvarchar" MaxLength="255" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="NodeDetail">
+    <Key>
+      <PropertyRef Name="NodeId" />
+      <PropertyRef Name="updateTime" />
+    </Key>
+    <Property Name="NodeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Temperature" Type="float" />
+    <Property Name="SoilMoisture" Type="float" />
+    <Property Name="Humidity" Type="float" />
+    <Property Name="Raining" Type="int" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="updateTime" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_NodeDetail">
+    <End Role="Node" Type="Self.Node" Multiplicity="1" />
+    <End Role="NodeDetail" Type="Self.NodeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Node">
+        <PropertyRef Name="NodeId" />
+      </Principal>
+      <Dependent Role="NodeDetail">
+        <PropertyRef Name="NodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WeatherWorkStationModelStoreContainer">
+    <EntitySet Name="Node" EntityType="Self.Node" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NodeDetail" EntityType="Self.NodeDetail" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_NodeDetail" Association="Self.FK_NodeDetail">
+      <End Role="Node" EntitySet="Node" />
+      <End Role="NodeDetail" EntitySet="NodeDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

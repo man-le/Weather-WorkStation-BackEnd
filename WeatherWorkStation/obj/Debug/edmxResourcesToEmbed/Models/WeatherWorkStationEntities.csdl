@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeatherWorkStationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Node">
+    <Key>
+      <PropertyRef Name="NodeId" />
+    </Key>
+    <Property Name="NodeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NodeLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="NodeDetail" Relationship="Self.FK_NodeDetail" FromRole="Node" ToRole="NodeDetail" />
+  </EntityType>
+  <EntityType Name="NodeDetail">
+    <Key>
+      <PropertyRef Name="NodeId" />
+      <PropertyRef Name="updateTime" />
+    </Key>
+    <Property Name="NodeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Temperature" Type="Double" />
+    <Property Name="SoilMoisture" Type="Double" />
+    <Property Name="Humidity" Type="Double" />
+    <Property Name="Raining" Type="Int32" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="updateTime" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Node" Relationship="Self.FK_NodeDetail" FromRole="NodeDetail" ToRole="Node" />
+  </EntityType>
+  <Association Name="FK_NodeDetail">
+    <End Role="Node" Type="Self.Node" Multiplicity="1" />
+    <End Role="NodeDetail" Type="Self.NodeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Node">
+        <PropertyRef Name="NodeId" />
+      </Principal>
+      <Dependent Role="NodeDetail">
+        <PropertyRef Name="NodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WeatherWorkStationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Node" EntityType="Self.Node" />
+    <EntitySet Name="NodeDetail" EntityType="Self.NodeDetail" />
+    <AssociationSet Name="FK_NodeDetail" Association="Self.FK_NodeDetail">
+      <End Role="Node" EntitySet="Node" />
+      <End Role="NodeDetail" EntitySet="NodeDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

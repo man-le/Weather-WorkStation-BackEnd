@@ -1,0 +1,39 @@
+﻿<div class="col-md-8 col-md-offset-2 stats-info stats-last widget-shadow">
+    <table id="LiveTable" class="table stats-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Node Id</th>
+                <th>STATUS</th>
+                <th>Node Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                WeatherWorkStation.Controllers.DashBoardController controller = new WeatherWorkStation.Controllers.DashBoardController();
+                var result = controller.GetNodes();
+                String myString = "";
+                foreach (var node in result)
+                {
+                    myString+="<tr> \n";
+                    myString+="<th scope='row'>\n\t"+ node.Id+ "</th>\n" ;
+                    myString+="<td>\n\t"+ node.NodeId +"</td>\n\t";
+                    if(node.Status)
+                    {
+                        myString+="<td>\n\t<span class='label label-success'> Online </span>\n</td>\n";
+
+                    }
+                    else
+                    {
+                        myString += "<td>\n\t<span class='label label-danger'> Offline </span>\n</td>\n";
+
+                    }
+                    myString+="<td>\n\t<h5>"+ node.NodeLocation +"<i class ='fa fa-location-arrow'> </i> </h5>\n</td>\n";
+                    myString += "</tr>\n";
+                }
+                var myHtmlString = new HtmlString(myString);
+            }
+           @myHtmlString         
+        </tbody>
+    </table>
+</div>
